@@ -36,7 +36,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = null;
+  const token = localStorage.getItem('token');
   if (to.path === '/login' && token) {
     // redirect user if he is already logged in
     next({
