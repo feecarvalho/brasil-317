@@ -1,5 +1,7 @@
 <template>
-  <p>Filter</p>
+  <section class="filters">
+    <h1>Filtros</h1>
+  </section>
 </template>
 
 <script lang="ts">
@@ -22,5 +24,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-
+  .filters {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+  }
 </style>

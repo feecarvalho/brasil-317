@@ -60,7 +60,7 @@ export default Vue.extend({
       display: flex;
       flex-direction: column;
       height: 100vh;
-      width: 15%;
+      min-width: 15%;
       background: #031d34;
       justify-content: space-between;
       color: white;
@@ -73,6 +73,7 @@ export default Vue.extend({
         display: flex;
         padding: 10px;
         align-items: center;
+        margin-bottom: 15px;
       }
 
       li, a {
