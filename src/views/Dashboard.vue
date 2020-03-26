@@ -3,16 +3,24 @@
   <h1>Dashboard</h1>
   <div class="dashboard__charts">
     <ul class="dashboard__charts-options">
-      <li @click="showChart('byDate')">Editais por data</li>
-      <li @click="showChart('percentageByPortal')">Porcentagem de editais por portal</li>
-      <li @click="showChart('byPurchasingUnity')">Editais por unidade compradora (UASG)</li>
+      <li @click="showChart('byDate')" :class="[{'active-chart': showChartByDate}]">
+        Editais por data
+      </li>
+      <li @click="showChart('percentageByPortal')"
+        :class="[{'active-chart': showChartPercentageByPortals}]">
+          Porcentagem de editais por portal
+      </li>
+      <li @click="showChart('byPurchasingUnity')"
+        :class="[{'active-chart': showChartPurchasingUnity}]">
+        Editais por unidade compradora (UASG)
+      </li>
     </ul>
   </div>
   <div class="dashboard__container">
     <div v-if="showChartByDate" class="dashboard__chart-render">
       <div class="chart-type-pie">
         <apexchart
-          width="580"
+          height="370"
           type="donut"
           :options="this.byDate.options"
           :series="this.byDate.series">
@@ -22,7 +30,7 @@
     <div v-if="showChartPercentageByPortals" class="dashboard__chart-render">
       <div class="chart-type-pie">
         <apexchart
-          width="580"
+          height="370"
           type="bar"
           :options="this.percentagePortal.options"
           :series="this.percentagePortal.series">
@@ -32,7 +40,7 @@
     <div v-if="showChartPurchasingUnity" class="dashboard__chart-render">
       <div class="chart-type-pie">
         <apexchart
-          width="580"
+          height="370"
           type="donut"
           :options="this.byPurchasingUnity.options"
           :series="this.byPurchasingUnity.series">
@@ -102,7 +110,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    showChart(param) {
+    showChart(param: string) {
       this.showChartByDate = false;
       this.showChartPurchasingUnity = false;
       this.showChartPercentageByPortals = false;
@@ -129,12 +137,6 @@ export default Vue.extend({
           const resultDatas = this.reduceCounter(dataEditais);
           const resultPortals = this.reduceCounter(portals);
           const resultUnidades = this.reduceCounter(unidadesCompradoras);
-          console.log(resultUnidades);
-          // const result = portals.reduce((prev: { [x: string]: number }, cur: string) => {
-          //   const acc = prev;
-          //   acc[cur] = (acc[cur] || 0) + 1;
-          //   return acc;
-          // }, {});
 
           Object.keys(resultPortals).forEach((e) => {
             this.percentagePortal.options.labels.push(e);
@@ -156,11 +158,6 @@ export default Vue.extend({
             this.byPurchasingUnity.options.labels.push(e);
             this.byPurchasingUnity.series.push(resultUnidades[e]);
           });
-
-          // Object.keys(result).forEach((e) => {
-          //   this.percentagePortal.options.labels.push(e);
-          //   this.percentagePortal.series.push(result[e]);
-          // });
         });
     },
   },
@@ -174,53 +171,68 @@ export default Vue.extend({
   .dashboard {
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     height: 100vh;
 
     h1 {
-      align-self: baseline;
-      flex: 1 1 100%;
+      padding: 15px 0;
       height: 10%;
       font-size: 1.35em;
       font-weight: bold;
     }
 
     &__charts {
-      width: 20%;
-      height: 90%;
+      width: 90%;
+      height: 15%;
+      display: flex;
+      border-top: 2px solid #ccc;
+      justify-content: center;
+      margin: 0 auto;
 
       ul {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        height: 100%;
-        margin-left: 15%;
+        flex: 1;
+        justify-content: space-between;
+        margin-top: 10px;
       }
 
       li {
-        width: 100%;
-        margin: 20px auto;
+        padding: 15px 5px;
+        margin: auto 15px;
+        width: 30%;
         background: #ddd;
         border-top: 6px solid #031d34;
         border-radius: 2px;
         text-transform: uppercase;
         padding: 5px 8px;
-        font-size: .8em;
+        font-size: .7em;
         font-weight: bold;
         cursor: pointer;
+      }
+
+      li.active-chart {
+        border-top: 6px solid #368ECF;
+        font-size: 0.75em;
       }
     }
 
     &__container {
       display: flex;
       width: 80%;
+      margin: 0 auto;
       align-items: center;
       justify-content: center;
     }
 
     &__chart-render {
-      width: 70%;
-      margin: 0 auto;
+      margin-top: 20px;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 530px) {
+    .dashboard__charts li {
+      font-size: 0.6em;
     }
   }
 </style>

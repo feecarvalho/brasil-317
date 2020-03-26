@@ -78,7 +78,6 @@ export default Vue.extend({
       if (this.isEmailValid || this.isPasswordValid) return;
       this.getToken(this.user)
         .then((res) => {
-          console.log(res);
           if (res) {
             this.$router.push('/');
           } else {
